@@ -24,6 +24,8 @@ loader.style.display="none";
 
 startBtn.addEventListener("click",()=>{
 
+music.play();
+
 welcome.style.opacity="0";
 
 setTimeout(()=>{
