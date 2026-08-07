@@ -204,64 +204,48 @@ startSlider();
 // Birthday V5 - Part 3
 // ==========================
 
-let currentSlide=0;
+let currentSlide = 0;
 
 function startSlider(){
 
-// প্রথম ছবি
-slides[currentSlide].classList.add("active");
+    slides[currentSlide].classList.add("active");
 
-// প্রতি ৪ সেকেন্ডে ছবি বদলাবে
-const slider=setInterval(()=>{
+    showLine(0);
 
-slides[currentSlide].classList.remove("active");
+    const slider = setInterval(() => {
 
-currentSlide++;
+        slides[currentSlide].classList.remove("active");
 
-if(currentSlide>=slides.length){
+        currentSlide++;
 
-clearInterval(slider);
+        if(currentSlide >= slides.length){
 
-showMessage();
+            clearInterval(slider);
+            return;
 
-return;
+        }
 
+        slides[currentSlide].classList.add("active");
+
+        showLine(currentSlide);
+
+    },4000);
 }
 
-slides[currentSlide].classList.add("active");
+function showLine(index){
 
-},4000);
+    const lines = document.querySelectorAll(".line");
 
-}
+    lines.forEach(line => {
+        line.classList.remove("show");
+    });
 
-// ==========================
-// Message Animation
-// ==========================
+    if(lines[index]){
 
-function showMessage(){
+        setTimeout(() => {
+            lines[index].classList.add("show");
+        },500);
 
-const message=document.getElementById("message");
+    }
 
-message.style.display="block";
-
-const lines=document.querySelectorAll(".line");
-
-const from=document.querySelector(".from");
-
-lines.forEach((line,index)=>{
-
-setTimeout(()=>{
-
-line.classList.add("show");
-
-},index*2000);
-
-});
-
-setTimeout(()=>{
-
-from.classList.add("show");
-
-},lines.length*2000+1000);
-
-}
+        }
