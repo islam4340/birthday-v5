@@ -224,25 +224,15 @@ margin-bottom:25px;
 }
 
 .line{
-
-opacity:0;
-
-transform:translateY(25px);
-
-margin:18px 0;
-
-font-size:22px;
-
-transition:1s;
-
+.line{
+    opacity:0;
+    transform:translateY(20px);
+    transition:all 1s ease;
 }
 
 .line.show{
-
-opacity:1;
-
-transform:translateY(0);
-
+    opacity:1;
+    transform:translateY(0);
 }
 
 .from{
