@@ -204,48 +204,66 @@ startSlider();
 // Birthday V5 - Part 3
 // ==========================
 
+// ==========================
+// Photo + Message Story
+// ==========================
+
 let currentSlide = 0;
 
 function startSlider(){
 
+    const lines = document.querySelectorAll(".line");
+
+    // প্রথম ছবি
     slides[currentSlide].classList.add("active");
 
+    // প্রথম লেখা
     showLine(0);
 
     const slider = setInterval(() => {
 
+        // আগের ছবি সরাবে
         slides[currentSlide].classList.remove("active");
 
         currentSlide++;
 
+        // ১১ নম্বর ছবিতে পৌঁছালে
         if(currentSlide >= slides.length){
 
             clearInterval(slider);
-            return;
 
+            // সব লেখা দেখাবে
+            lines.forEach(line => {
+                line.classList.add("show");
+            });
+
+            return;
         }
 
+        // নতুন ছবি দেখাবে
         slides[currentSlide].classList.add("active");
 
+        // নতুন ছবির লেখা দেখাবে
         showLine(currentSlide);
 
     },4000);
 }
 
+
 function showLine(index){
 
     const lines = document.querySelectorAll(".line");
 
-    lines.forEach(line => {
-        line.classList.remove("show");
-    });
+    // আগের লেখাগুলো মুছে ফেলবে না
+    // শুধু বর্তমান ছবির লেখাটি দেখাবে
 
     if(lines[index]){
 
         setTimeout(() => {
+
             lines[index].classList.add("show");
+
         },500);
 
     }
-
-        }
+}
