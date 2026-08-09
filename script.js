@@ -187,70 +187,6 @@ function randomColor(){
 
 }
 
-
-// =====================================================
-// CREATE BLACK COVER
-// =====================================================
-
-function createBlackCover(){
-
-    let cover =
-        document.getElementById(
-            "blackCover"
-        );
-
-
-    if(cover){
-
-        return cover;
-
-    }
-
-
-    cover =
-        document.createElement("div");
-
-
-    cover.id =
-        "blackCover";
-
-
-    cover.style.position =
-        "fixed";
-
-    cover.style.inset =
-        "0";
-
-    cover.style.width =
-        "100%";
-
-    cover.style.height =
-        "100%";
-
-    cover.style.background =
-        "#000";
-
-    cover.style.zIndex =
-        "15";
-
-    cover.style.pointerEvents =
-        "none";
-
-    cover.style.opacity =
-        "1";
-
-    cover.style.display =
-        "block";
-
-
-    party.appendChild(cover);
-
-
-    return cover;
-
-}
-
-
 // =====================================================
 // CREATE FIREWORK ROCKET
 // =====================================================
@@ -717,31 +653,24 @@ function animateFireworks(){
 
 function startRealFireworks(){
 
-    if(
-        fireworkRunning
-    ){
-
+    if(fireworkRunning){
         return;
-
     }
 
+    fireworkRunning = true;
 
-    fireworkRunning =
-        true;
+    // প্রথমে photo কালো থাকবে
+    slides.forEach(slide => {
 
+        slide.style.opacity = "0.08";
 
-    // প্রথমে কালো screen
+    });
 
-    createBlackCover();
-
-
-    // Animation
 
     animateFireworks();
 
 
-    // প্রথম blast
-
+    // প্রথম firework
     setTimeout(() => {
 
         createFirework();
@@ -749,8 +678,7 @@ function startRealFireworks(){
     },500);
 
 
-    // পরের blast
-
+    // পরের firework
     setInterval(() => {
 
         createFirework();
@@ -759,7 +687,6 @@ function startRealFireworks(){
 
 
     // Golden rain
-
     setInterval(() => {
 
         createRain();
@@ -945,130 +872,155 @@ function startCelebration(){
 function startSlider(){
 
     const lines =
-        document.querySelectorAll(
-            ".line"
-        );
-
+        document.querySelectorAll(".line");
 
     const from =
-        document.querySelector(
-            ".from"
-        );
+        document.querySelector(".from");
 
+
+    // =====================================
+    // শুরু হবে ১ নম্বর ছবি থেকে
+    // =====================================
 
     currentSlide = 0;
 
 
-    // First photo
-
-    if(
-        slides.length > 0
-    ){
+    if(slides.length > 0){
 
         slides[0]
             .classList
             .add("active");
 
+        slides[0].style.opacity = "0.08";
+
     }
 
 
-    // First line
-
+    // প্রথম লেখা
     showLine(0);
 
 
-    const slider =
-        setInterval(() => {
+    // =====================================
+    // PHOTO SLIDER
+    // =====================================
+
+    const slider = setInterval(() => {
 
 
-            if(
-                slides.length === 0
-            ){
+        // কোনো ছবি না থাকলে বন্ধ
+        if(slides.length === 0){
 
-                clearInterval(
-                    slider
-                );
+            clearInterval(slider);
 
-                return;
+            return;
 
-            }
+        }
 
 
-            slides[currentSlide]
-                .classList
-                .remove("active");
+        // বর্তমান ছবি সরিয়ে দাও
+
+        slides[currentSlide]
+            .classList
+            .remove("active");
 
 
-            currentSlide++;
+        currentSlide++;
 
 
-            // Last photo
+        // =====================================
+        // ১১ নম্বর ছবিতে পৌঁছে গেলে
+        // =====================================
 
-            if(
-                currentSlide >=
-                slides.length
-            ){
+        if(currentSlide >= slides.length){
 
-                clearInterval(
-                    slider
-                );
+            clearInterval(slider);
 
 
-                currentSlide =
-                    slides.length - 1;
+            // শেষ ছবি = ১১ নম্বর
+            currentSlide =
+                slides.length - 1;
 
 
-                slides[currentSlide]
-                    .classList
-                    .add("active");
+            const lastPhoto =
+                slides[currentSlide];
 
 
-                // Show all lines
+            // =================================
+            // ১১ নম্বর ছবি পুরো পরিষ্কার
+            // =================================
 
-                lines.forEach(
-                    line => {
-
-                        line.classList
-                            .add("show");
-
-                    }
-                );
-
-
-                // Signature
-
-                if(from){
-
-                    setTimeout(() => {
-
-                        from.classList
-                            .add("show");
-
-                    },700);
-
-                }
-
-
-                return;
-
-            }
-
-
-            // Next photo
-
-            slides[currentSlide]
+            lastPhoto
                 .classList
                 .add("active");
 
 
-            // Matching line
-
-            showLine(
-                currentSlide
-            );
+            lastPhoto.style.transition =
+                "opacity 1s ease";
 
 
-        },4000);
+            lastPhoto.style.opacity =
+                "1";
+
+
+            // =================================
+            // সব ১১টি লেখা দেখাবে
+            // =================================
+
+            lines.forEach(line => {
+
+                line.classList.add("show");
+
+            });
+
+
+            // =================================
+            // তোমার জামাই জান
+            // =================================
+
+            if(from){
+
+                setTimeout(() => {
+
+                    from.classList.add("show");
+
+                },700);
+
+            }
+
+
+            // =================================
+            // ১১ নম্বর ছবিতে আর কোনো
+            // কালো effect হবে না
+            // =================================
+
+            return;
+
+        }
+
+
+        // =====================================
+        // পরের ছবি
+        // =====================================
+
+        slides[currentSlide]
+            .classList
+            .add("active");
+
+
+        // নতুন ছবিও শুরুতে কালো থাকবে
+
+        slides[currentSlide]
+            .style.opacity = "0.08";
+
+
+        // =====================================
+        // সেই ছবির লেখা
+        // =====================================
+
+        showLine(currentSlide);
+
+
+    },4000);
 
 }
 
