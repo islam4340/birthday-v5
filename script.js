@@ -230,40 +230,64 @@ function createFirework(){
 // =====================================================
 // FIREWORK EXPLOSION
 // =====================================================
-
 function explode(f){
 
-    const cover =
-        document.getElementById(
-            "blackCover"
-        );
+    // =====================================
+    // শুধু ACTIVE PHOTO blast-এর সময় পরিষ্কার
+    // =====================================
+
+    const activePhoto =
+        document.querySelector(".slide.active");
 
 
-    // =================================================
-    // BLAST হলে PHOTO দেখা যাবে
-    // =================================================
+    if(activePhoto){
 
-    if(cover){
+        // ১১ নম্বর ছবিতে গেলে সবসময় পরিষ্কার
+        if(currentSlide === slides.length - 1){
 
-        cover.style.opacity =
-            "0";
+            activePhoto.style.opacity = "1";
 
+        }
 
-        // Blast শেষ হলে আবার BLACK
+        // ১-১০ নম্বর ছবিতে blast হলে
+        else{
 
-        setTimeout(() => {
+            // হঠাৎ পরিষ্কার
+            activePhoto.style.transition =
+                "opacity 0.08s ease";
 
-            cover.style.opacity =
+            activePhoto.style.opacity =
                 "1";
 
-        },700);
+
+            // blast শেষ হলে ধীরে কালো
+            setTimeout(() => {
+
+                // এর মধ্যে ১১ নম্বর ছবিতে চলে গেলে
+                // আর কালো করবে না
+                if(
+                    currentSlide !==
+                    slides.length - 1
+                ){
+
+                    activePhoto.style.transition =
+                        "opacity 1.2s ease";
+
+                    activePhoto.style.opacity =
+                        "0.08";
+
+                }
+
+            },700);
+
+        }
 
     }
 
 
-    // =================================================
-    // MAIN PARTICLES
-    // =================================================
+    // =====================================
+    // MAIN FIREWORK EXPLOSION
+    // =====================================
 
     const particleCount = 130;
 
@@ -286,24 +310,21 @@ function explode(f){
 
         sparks.push({
 
-            x:f.x,
+            x: f.x,
 
-            y:f.y,
+            y: f.y,
 
             vx:
-                Math.cos(angle) *
-                speed,
+                Math.cos(angle) * speed,
 
             vy:
-                Math.sin(angle) *
-                speed,
+                Math.sin(angle) * speed,
 
-            life:1,
+            life: 1,
 
             decay:
                 0.008 +
-                Math.random() *
-                0.014,
+                Math.random() * 0.014,
 
             gravity:
                 0.045,
@@ -313,17 +334,16 @@ function explode(f){
 
             size:
                 1 +
-                Math.random() *
-                2.5
+                Math.random() * 2.5
 
         });
 
     }
 
 
-    // =================================================
-    // WHITE SPARKS
-    // =================================================
+    // =====================================
+    // EXTRA WHITE SPARKS
+    // =====================================
 
     for(
         let i = 0;
@@ -343,38 +363,31 @@ function explode(f){
 
         sparks.push({
 
-            x:f.x,
+            x: f.x,
 
-            y:f.y,
+            y: f.y,
 
             vx:
-                Math.cos(angle) *
-                speed,
+                Math.cos(angle) * speed,
 
             vy:
-                Math.sin(angle) *
-                speed,
+                Math.sin(angle) * speed,
 
-            life:1,
+            life: 1,
 
-            decay:
-                0.018,
+            decay: 0.018,
 
-            gravity:
-                0.03,
+            gravity: 0.03,
 
-            color:
-                "#ffffff",
+            color: "#ffffff",
 
-            size:
-                1
+            size: 1
 
         });
 
     }
 
-}
-
+            }
 
 // =====================================================
 // GOLDEN RAIN
