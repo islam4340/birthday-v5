@@ -266,7 +266,6 @@ left:0;
 /* =========================
    Birthday Story Messages
 ========================= */
-
 #message{
     display: block;
     position: fixed;
@@ -287,7 +286,6 @@ left:0;
     
     color: white;
     text-shadow: 0 2px 10px rgba(0,0,0,.8);
-
 }
 
 #message .line{
@@ -304,4 +302,19 @@ left:0;
 #message .line.show{
     opacity: 1;
     transform: translateY(0);
+}
+
+
+/* তোমার জামাই জান */
+
+#message .from{
+    opacity: 0;
+    margin-top: 20px;
+    font-size: 24px;
+    color: pink;
+    transition: opacity 1s ease;
+}
+
+#message .from.show{
+    opacity: 1;
 }
