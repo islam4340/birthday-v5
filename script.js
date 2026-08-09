@@ -656,9 +656,6 @@ function startRealFireworks(){
 
     fireworkRunning = true;
 
-    const flashOverlay =
-        document.getElementById("flashOverlay");
-
     if(flashOverlay){
         flashOverlay.style.display = "block";
         flashOverlay.style.opacity = "1";
