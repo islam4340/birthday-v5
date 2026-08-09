@@ -214,7 +214,7 @@ function startSlider(){
     slides[currentSlide].classList.add("active");
 
     // প্রথম লেখা
-    showLine(1);
+    showLine(0);
 
     const slider = setInterval(() => {
 
