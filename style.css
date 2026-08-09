@@ -1,475 +1,415 @@
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
 }
 
 body{
-background:#000;
-overflow:hidden;
-color:#fff;
+    background:#000;
+    overflow:hidden;
+    color:#fff;
 }
+
+
+/* =========================
+   Sections
+========================= */
 
 section{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
 }
+
+
+/* =========================
+   Loader
+========================= */
 
 #loader{
-background:#000;
-z-index:9999;
+    background:#000;
+    z-index:9999;
 }
 
+
+/* =========================
+   Welcome
+========================= */
+
 #welcome{
-background:linear-gradient(180deg,#000,#1a001a);
+    background:linear-gradient(
+        180deg,
+        #000,
+        #1a001a
+    );
+    z-index:50;
 }
 
 .cake{
-font-size:130px;
-animation:floatCake 2s ease-in-out infinite;
+    font-size:130px;
+    animation:floatCake 2s ease-in-out infinite;
 }
 
 @keyframes floatCake{
 
-0%,100%{
-transform:translateY(0);
-}
+    0%,100%{
+        transform:translateY(0);
+    }
 
-50%{
-transform:translateY(-15px);
-}
+    50%{
+        transform:translateY(-15px);
+    }
 
 }
 
 #welcome h1{
-font-size:45px;
-margin-top:15px;
+    font-size:45px;
+    margin-top:15px;
 }
 
 #welcome h2{
-margin-top:10px;
-color:#ffd700;
+    margin-top:10px;
+    color:#ffd700;
 }
 
 #startBtn{
-
-margin-top:35px;
-
-padding:18px 45px;
-
-font-size:22px;
-
-border:none;
-
-border-radius:50px;
-
-background:#ff2d75;
-
-color:#fff;
-
-cursor:pointer;
-
-box-shadow:0 0 25px #ff2d75;
-
-transition:.3s;
-
+    margin-top:35px;
+    padding:18px 45px;
+    font-size:22px;
+    border:none;
+    border-radius:50px;
+    background:#ff2d75;
+    color:#fff;
+    cursor:pointer;
+    box-shadow:0 0 25px #ff2d75;
+    transition:.3s;
 }
 
 #startBtn:hover{
-
-transform:scale(1.08);
-
+    transform:scale(1.08);
 }
+
+
+/* =========================
+   Countdown
+========================= */
 
 #countSection{
-
-display:none;
-
-background:#000;
-
-font-size:140px;
-
-font-weight:bold;
-
+    display:none;
+    background:#000;
+    font-size:140px;
+    font-weight:bold;
+    z-index:40;
 }
+
+
+/* =========================
+   Party
+========================= */
 
 #party{
-
-display:none;
-
-background:#000;
-
+    display:none;
+    background:#000;
+    z-index:1;
 }
-/* Photo Slider */
+
+
+/* =========================
+   Photo Slider
+========================= */
 
 .slider{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-z-index:1;
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:1;
 }
 
 .slide{
-position:absolute;
-width:100%;
-height:100%;
-object-fit:cover;
-opacity:0;
-transition:1.5s;
-transform:scale(1.15);
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0;
+    transition:
+        opacity 1.5s ease,
+        transform 1.5s ease;
+    transform:scale(1.15);
 }
 
 .slide.active{
-opacity:1;
-transform:scale(1);
+    opacity:1;
+    transform:scale(1);
 }
 
-/* Effects */
+
+/* =========================
+   Effects
+========================= */
 
 #hearts,
 #petals,
-#balloons,
-#fireworks{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-pointer-events:none;
-overflow:hidden;
+#balloons{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:10;
 }
 
 .heart,
 .petal,
 .balloon{
-
-position:absolute;
-
-bottom:-100px;
-
-font-size:32px;
-
-animation:up 10s linear forwards;
-
+    position:absolute;
+    bottom:-100px;
+    font-size:32px;
+    animation:up 10s linear forwards;
 }
 
 @keyframes up{
 
-0%{
+    0%{
+        transform:translateY(0);
+        opacity:1;
+    }
 
-transform:translateY(0);
-
-opacity:1;
-
-}
-
-100%{
-
-transform:translateY(-120vh);
-
-opacity:0;
+    100%{
+        transform:translateY(-120vh);
+        opacity:0;
+    }
 
 }
 
-}
 
-/* Message */
-
-#message{
-
-position:absolute;
-
-width:90%;
-
-max-width:700px;
-
-text-align:center;
-
-padding:25px;
-
-background:rgba(0,0,0,.35);
-
-border-radius:25px;
-
-backdrop-filter:blur(2px);
-
-display:none;
-
-}
-
-#message h1{
-
-font-size:42px;
-
-margin-bottom:15px;
-
-}
-
-#message h2{
-
-color:#ffd700;
-
-margin-bottom:25px;
-
-}
-
-.line{
-    opacity:0;
-    transform:translateY(20px);
-    transition:all 1s ease;
-}
-
-.line.show{
-    opacity:1;
-    transform:translateY(0);
-}
-
-.from{
-
-margin-top:35px;
-
-font-size:28px;
-
-color:pink;
-
-opacity:0;
-
-transition:1s;
-
-}
-
-.from.show{
-
-opacity:1;
-
-}
-
-canvas{
-
-position:fixed;
-
-top:0;
-
-left:0;
-
-  }
 /* =========================
-   Birthday Story Messages
-========================= */
-#message{
-    display: block;
-    position: fixed;
-    z-index: 100;
-    left: 50%;
-    top: 50%;
-    bottom: auto;
-    transform: translate(-50%, -50%);
-    
-    width: 92%;
-    max-width: 750px;
-    max-height: 82vh;
-    
-    overflow-y: auto;
-    
-    padding: 20px 15px;
-    text-align: center;
-    
-    color: white;
-    text-shadow: 0 2px 10px rgba(0,0,0,.8);
-}
-
-#message .line{
-    font-size: clamp(14px, 3.5vw, 18px);
-    line-height: 1.5;
-    margin: 10px 0;
-    
-    opacity: 0;
-    transform: translateY(20px);
-    
-    transition: opacity 1s ease, transform 1s ease;
-}
-
-#message .line.show{
-    opacity: 1;
-    transform: translateY(0);
-}
-
-
-/* তোমার জামাই জান */
-
-#message .from{
-    opacity: 0;
-    margin-top: 20px;
-    font-size: 24px;
-    color: pink;
-    transition: opacity 1s ease;
-}
-
-#message .from.show{
-    opacity: 1;
-}
-/* =========================
-   Bengali Birthday Text
+   Fireworks
 ========================= */
 
-/* শুধু বাংলা লেখার জন্য সুন্দর font */
+#fireworks{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:5;
+}
+
+
+/* =========================
+   Message
+========================= */
+
+#message{
+    display:block;
+    position:fixed;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    width:92%;
+    max-width:750px;
+    max-height:82vh;
+
+    overflow-y:auto;
+
+    padding:20px 15px;
+
+    text-align:center;
+
+    background:transparent !important;
+
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+
+    box-shadow:none !important;
+
+    color:#fff;
+
+    text-shadow:
+        0 2px 10px rgba(0,0,0,.8);
+
+    z-index:20;
+}
+
+
+/* =========================
+   Bengali Font
+========================= */
+
 #message .line,
 #message h2,
 #message .from{
-    font-family: "Noto Sans Bengali", "SolaimanLipi", sans-serif;
+
+    font-family:
+        "Noto Sans Bengali",
+        "SolaimanLipi",
+        sans-serif !important;
+
 }
 
 
-/* Message box সম্পূর্ণ transparent */
-#message{
-    background: transparent !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    box-shadow: none !important;
-}
+/* =========================
+   Message Lines
+========================= */
 
-
-/* বাংলা লেখার রং */
 #message .line{
-    color: #ff69b4;
-    text-shadow:
-        0 0 5px rgba(255,105,180,.8),
-        0 0 10px rgba(0,255,100,.5);
+
+    display:block;
+
+    font-size:
+        clamp(14px,3.5vw,18px);
+
+    line-height:1.5;
+
+    margin:10px 0;
+
+    opacity:0;
+
+    transform:translateY(20px);
+
+    transition:
+        opacity 1s ease,
+        transform 1s ease;
+
 }
 
 
-/* প্রতিটি লাইনে সবুজ-পিঙ্ক মিক্স */
+/* Show line */
+
+#message .line.show{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+}
+
+
+/* =========================
+   Blue + Green Text
+========================= */
+
 #message .line:nth-of-type(odd){
-    color: #ff69b4;
+
+    color:#00bfff !important;
+
 }
 
 #message .line:nth-of-type(even){
-    color: #66ff99;
+
+    color:#66ff99 !important;
+
 }
 
 
-/* বউজান আমার */
-#message h2{
-    color: #ff69b4 !important;
-}
+/* Glow */
 
-
-/* তোমার জামাই জান */
-#message .from{
-    color: #66ff99;
-    text-shadow: 0 0 10px rgba(102,255,153,.7);
-    }
-/* নীল + সবুজ লেখা */
-
-#message .line:nth-of-type(odd){
-    color: #00bfff !important;
-}
-
-#message .line:nth-of-type(even){
-    color: #66ff99 !important;
-}
-
-/* বউজান আমার */
-#message h2{
-    color: #00bfff !important;
-}
-
-/* তোমার জামাই জান */
-#message .from{
-    color: #66ff99 !important;
-}
-
-/* নীল + সবুজ glow */
 #message .line{
+
     text-shadow:
         0 0 5px rgba(0,191,255,.8),
         0 0 10px rgba(102,255,153,.5);
-}
-/* বাংলা লেখার নতুন Font */
 
-#message .line,
-#message h2,
+}
+
+
+/* =========================
+   Bউজান আমার
+========================= */
+
+#message h2{
+
+    color:#00bfff !important;
+
+    margin-bottom:25px;
+
+}
+
+
+/* =========================
+   তোমার জামাই জান
+========================= */
+
 #message .from{
-    font-family: "Noto Sans Bengali", sans-serif !important;
+
+    margin-top:20px;
+
+    font-size:24px;
+
+    color:#66ff99 !important;
+
+    opacity:0;
+
+    transition:
+        opacity 1s ease;
+
+    text-shadow:
+        0 0 10px
+        rgba(102,255,153,.7);
+
 }
+
+#message .from.show{
+
+    opacity:1;
+
+}
+
+
 /* =========================
-   Layer Fix
+   Mobile
 ========================= */
 
-/* Photos - সবার নিচে */
-.slider{
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-}
+@media(max-width:600px){
 
-.slide{
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+    .cake{
+        font-size:90px;
+    }
 
+    #welcome h1{
+        font-size:32px;
+    }
 
-/* Fireworks - ছবির উপরে */
-#fireworks{
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 5;
-    pointer-events: none;
-}
+    #welcome h2{
+        font-size:22px;
+    }
 
+    #startBtn{
+        padding:15px 32px;
+        font-size:18px;
+    }
 
-/* Hearts / Roses / Balloons - ছবির উপরে */
-#hearts,
-#petals,
-#balloons{
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 10;
-    pointer-events: none;
-}
+    #countSection{
+        font-size:100px;
+    }
 
+    #message{
+        width:94%;
+        max-height:80vh;
+        padding:15px 10px;
+    }
 
-/* Text - সবার উপরে */
-#message{
-    z-index: 20 !important;
-}
-/* =========================
-   Cinematic Firework Flash
-========================= */
+    #message .line{
+        font-size:15px;
+        line-height:1.5;
+        margin:9px 0;
+    }
 
-#fireworks{
-    position: fixed;
-    inset: 0;
-    z-index: 5 !important;
-    pointer-events: none;
-}
+    #message .from{
+        font-size:21px;
+    }
 
-#hearts,
-#petals,
-#balloons{
-    z-index: 10 !important;
-    pointer-events: none;
-}
-
-#message{
-    z-index: 20 !important;
 }
