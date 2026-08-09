@@ -291,7 +291,6 @@ left:0;
 }
 
 #message .line{
-    display: block;
     font-size: clamp(14px, 3.5vw, 18px);
     line-height: 1.5;
     margin: 10px 0;
