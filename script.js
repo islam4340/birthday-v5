@@ -648,38 +648,31 @@ function animateFireworks() {
 // Start Fireworks
 // ==========================
 
-function startRealFireworks() {
+function startRealFireworks(){
 
-    if (fireworkRunning) {
+    if(fireworkRunning){
         return;
     }
 
-
     fireworkRunning = true;
 
+    const flashOverlay =
+        document.getElementById("flashOverlay");
 
-    // Start animation
+    if(flashOverlay){
+        flashOverlay.style.display = "block";
+        flashOverlay.style.opacity = "1";
+    }
 
     animateFireworks();
 
-
-    // Rockets
-
-    setInterval(() => {
-
+    setInterval(()=>{
         createFirework();
+    },900);
 
-    }, 900);
-
-
-    // Golden spark rain
-
-    setInterval(() => {
-
+    setInterval(()=>{
         createRain();
-
-    }, 70);
-
+    },70);
 }
 
 
