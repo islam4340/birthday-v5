@@ -8,6 +8,26 @@
 // ==========================
 
 const loader = document.getElementById("loader");
+const flashOverlay = document.createElement("div");
+
+flashOverlay.id = "flashOverlay";
+
+flashOverlay.style.cssText = `
+    position:fixed;
+    inset:0;
+    z-index:4;
+    pointer-events:none;
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(255,255,255,.95),
+            rgba(120,210,255,.75) 35%,
+            rgba(0,0,0,1) 75%
+        );
+    opacity:1;
+    display:none;
+    transition:opacity .18s ease;
+`;
 const welcome = document.getElementById("welcome");
 const countSection = document.getElementById("countSection");
 const party = document.getElementById("party");
@@ -238,10 +258,6 @@ function createFirework() {
 // ==========================
 
 function explode(f){
-
-    const flashOverlay =
-        document.getElementById("flashOverlay");
-
 
     // =========================
     // Bright Photo Flash
@@ -656,10 +672,10 @@ function startRealFireworks(){
 
     fireworkRunning = true;
 
-    if(flashOverlay){
-        flashOverlay.style.display = "block";
-        flashOverlay.style.opacity = "1";
-    }
+    document.body.appendChild(flashOverlay);
+
+    flashOverlay.style.display = "block";
+    flashOverlay.style.opacity = "1";
 
     animateFireworks();
 
