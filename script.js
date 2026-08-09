@@ -237,20 +237,53 @@ function createFirework() {
 // Firework Explosion
 // ==========================
 
-function explode(f) {
+function explode(f){
+
+    const flashOverlay =
+        document.getElementById("flashOverlay");
+
+
+    // =========================
+    // Bright Photo Flash
+    // =========================
+
+    if(flashOverlay){
+
+        // প্রথমে কালো থেকে হঠাৎ উজ্জ্বল
+        flashOverlay.style.transition =
+            "opacity .12s ease";
+
+        flashOverlay.style.opacity = "0";
+
+
+        // অল্প সময় পর আবার কালো
+        setTimeout(() => {
+
+            flashOverlay.style.transition =
+                "opacity .6s ease";
+
+            flashOverlay.style.opacity = "1";
+
+        }, 650);
+
+    }
+
+
+    // =========================
+    // Explosion Particles
+    // =========================
 
     const particleCount = 110;
 
 
-    for (let i = 0; i < particleCount; i++) {
+    for(let i = 0; i < particleCount; i++){
 
         const angle =
             (Math.PI * 2 / particleCount) * i;
 
 
         const speed =
-            2 +
-            Math.random() * 5;
+            2 + Math.random() * 5;
 
 
         sparks.push({
@@ -260,12 +293,10 @@ function explode(f) {
             y: f.y,
 
             vx:
-                Math.cos(angle) *
-                speed,
+                Math.cos(angle) * speed,
 
             vy:
-                Math.sin(angle) *
-                speed,
+                Math.sin(angle) * speed,
 
             life: 1,
 
@@ -284,6 +315,51 @@ function explode(f) {
         });
 
     }
+
+
+    // =========================
+    // Extra White Sparks
+    // =========================
+
+    for(let i = 0; i < 30; i++){
+
+        const angle =
+            Math.random() *
+            Math.PI * 2;
+
+
+        const speed =
+            1 +
+            Math.random() * 4;
+
+
+        sparks.push({
+
+            x: f.x,
+
+            y: f.y,
+
+            vx:
+                Math.cos(angle) * speed,
+
+            vy:
+                Math.sin(angle) * speed,
+
+            life: 1,
+
+            decay: 0.018,
+
+            gravity: 0.03,
+
+            color: "#ffffff",
+
+            size: 1
+
+        });
+
+    }
+
+}
 
 
     // Extra small white sparks
