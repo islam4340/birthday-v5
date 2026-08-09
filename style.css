@@ -395,3 +395,10 @@ left:0;
         0 0 5px rgba(0,191,255,.8),
         0 0 10px rgba(102,255,153,.5);
 }
+/* বাংলা লেখার নতুন Font */
+
+#message .line,
+#message h2,
+#message .from{
+    font-family: "Noto Sans Bengali", sans-serif !important;
+}
