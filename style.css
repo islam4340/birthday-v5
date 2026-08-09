@@ -457,21 +457,22 @@ left:0;
 ========================= */
 
 #flashOverlay{
-    position: fixed;
-    inset: 0;
-    z-index: 4;
-    pointer-events: none;
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:4;
+    pointer-events:none;
 
     background:
         radial-gradient(
             circle at center,
-            rgba(255,255,255,0.95),
-            rgba(120,210,255,0.75) 35%,
+            rgba(255,255,255,.95),
+            rgba(120,210,255,.75) 35%,
             rgba(0,0,0,1) 75%
         );
 
-    opacity: 1;
-    transition: opacity .18s ease;
+    opacity:1;
+    transition:opacity .18s ease;
 }
 
 #fireworks{
