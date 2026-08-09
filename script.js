@@ -217,24 +217,20 @@ function createFirework() {
 // Create Flash Overlay
 // ==========================
 
-function createFlashOverlay() {
+function createFlashOverlay(){
 
     let overlay =
         document.getElementById("fireworkFlash");
 
-
-    if (overlay) {
+    if(overlay){
         return overlay;
     }
-
 
     overlay =
         document.createElement("div");
 
-
     overlay.id =
         "fireworkFlash";
-
 
     overlay.style.position =
         "fixed";
@@ -248,25 +244,18 @@ function createFlashOverlay() {
     overlay.style.pointerEvents =
         "none";
 
+    // কালো থাকবে
     overlay.style.background =
-        "radial-gradient(circle at center, rgba(255,255,255,.95), rgba(120,210,255,.65) 35%, #000 80%)";
+        "#000";
 
+    // শুরু থেকেই কালো
     overlay.style.opacity =
         "1";
 
     overlay.style.display =
-        "none";
-
-    overlay.style.transition =
-        "opacity .18s ease";
-
-
-    // IMPORTANT:
-    // Overlay goes inside party,
-    // not above welcome page.
+        "block";
 
     party.appendChild(overlay);
-
 
     return overlay;
 
@@ -276,54 +265,46 @@ function createFlashOverlay() {
 // ==========================
 // Firework Explosion
 // ==========================
+function explode(f){
 
-function explode(f) {
+    // =========================
+    // Photo ON during blast
+    // =========================
 
     const flash =
-        createFlashOverlay();
+        document.getElementById("fireworkFlash");
+
+    if(flash){
+
+        flash.style.opacity = "0";
+
+        setTimeout(() => {
+
+            flash.style.opacity = "1";
+
+        }, 650);
+
+    }
 
 
-    // Photo becomes visible
-    flash.style.display =
-        "block";
-
-
-    flash.style.opacity =
-        "0";
-
-
-    // Back to black after blast
-    setTimeout(() => {
-
-        flash.style.opacity =
-            "1";
-
-    }, 650);
-
-
-    // ======================
+    // =========================
     // Main Explosion
-    // ======================
+    // =========================
 
     const particleCount = 110;
 
-
-    for (let i = 0; i < particleCount; i++) {
+    for(let i = 0; i < particleCount; i++){
 
         const angle =
             (Math.PI * 2 / particleCount) * i;
 
-
         const speed =
-            2 +
-            Math.random() * 5;
-
+            2 + Math.random() * 5;
 
         sparks.push({
 
-            x: f.x,
-
-            y: f.y,
+            x:f.x,
+            y:f.y,
 
             vx:
                 Math.cos(angle) * speed,
@@ -331,15 +312,15 @@ function explode(f) {
             vy:
                 Math.sin(angle) * speed,
 
-            life: 1,
+            life:1,
 
             decay:
                 0.009 +
                 Math.random() * 0.015,
 
-            gravity: 0.045,
+            gravity:0.045,
 
-            color: f.color,
+            color:f.color,
 
             size:
                 1 +
@@ -350,26 +331,22 @@ function explode(f) {
     }
 
 
-    // ======================
+    // =========================
     // White Sparks
-    // ======================
+    // =========================
 
-    for (let i = 0; i < 30; i++) {
+    for(let i = 0; i < 30; i++){
 
         const angle =
             Math.random() * Math.PI * 2;
 
-
         const speed =
-            1 +
-            Math.random() * 4;
-
+            1 + Math.random() * 4;
 
         sparks.push({
 
-            x: f.x,
-
-            y: f.y,
+            x:f.x,
+            y:f.y,
 
             vx:
                 Math.cos(angle) * speed,
@@ -377,23 +354,21 @@ function explode(f) {
             vy:
                 Math.sin(angle) * speed,
 
-            life: 1,
+            life:1,
 
-            decay: 0.018,
+            decay:0.018,
 
-            gravity: 0.03,
+            gravity:0.03,
 
-            color: "#ffffff",
+            color:"#ffffff",
 
-            size: 1
+            size:1
 
         });
 
     }
 
-}
-
-
+}  
 // ==========================
 // Golden Falling Sparks
 // ==========================
