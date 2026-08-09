@@ -161,40 +161,271 @@ setTimeout(()=>b.remove(),12000);
 
 },900);
 
-// Fireworks
+// ==========================
+// Realistic Fireworks
+// ==========================
 
-setInterval(()=>{
+let fireworks = [];
+let sparks = [];
+let fireworkRunning = false;
 
-const x=Math.random()*canvas.width;
-const y=Math.random()*canvas.height*0.5;
+function randomColor(){
 
-for(let i=0;i<80;i++){
+    const colors = [
+        "#ff3b3b",
+        "#ffd700",
+        "#00eaff",
+        "#ff4fd8",
+        "#7cff4f",
+        "#ffffff"
+    ];
 
-const angle=(Math.PI*2/80)*i;
-const len=20+Math.random()*60;
-
-ctx.beginPath();
-ctx.moveTo(x,y);
-ctx.lineTo(
-x+Math.cos(angle)*len,
-y+Math.sin(angle)*len
-);
-
-ctx.strokeStyle=`hsl(${Math.random()*360},100%,60%)`;
-
-ctx.lineWidth=2;
-
-ctx.stroke();
+    return colors[Math.floor(Math.random() * colors.length)];
 
 }
 
-setTimeout(()=>{
 
-ctx.clearRect(0,0,canvas.width,canvas.height);
+// Create Firework
+function createFirework(){
 
-},500);
+    const x = Math.random() * canvas.width;
+    const targetY = 80 + Math.random() * canvas.height * 0.4;
 
-},1200);
+    fireworks.push({
+
+        x: x,
+        y: canvas.height + 10,
+
+        targetY: targetY,
+
+        speed: 8 + Math.random() * 3,
+
+        color: randomColor(),
+
+        exploded: false
+
+    });
+
+}
+
+
+// Explosion
+function explode(f){
+
+    const particleCount = 100;
+
+    for(let i = 0; i < particleCount; i++){
+
+        const angle =
+            (Math.PI * 2 / particleCount) * i;
+
+        const speed =
+            2 + Math.random() * 5;
+
+        sparks.push({
+
+            x: f.x,
+            y: f.y,
+
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+
+            life: 1,
+
+            decay: 0.012 + Math.random() * 0.015,
+
+            gravity: 0.045,
+
+            color: f.color,
+
+            size: 1 + Math.random() * 2
+
+        });
+
+    }
+
+}
+
+
+// Falling Spark Shower
+function createRain(){
+
+    for(let i = 0; i < 5; i++){
+
+        sparks.push({
+
+            x: Math.random() * canvas.width,
+
+            y: -10,
+
+            vx: (Math.random() - 0.5) * 0.8,
+
+            vy: 2 + Math.random() * 3,
+
+            life: 1,
+
+            decay: 0.006 + Math.random() * 0.008,
+
+            gravity: 0.02,
+
+            color: Math.random() > 0.5
+                ? "#ffd700"
+                : "#ffffff",
+
+            size: 1 + Math.random() * 2
+
+        });
+
+    }
+
+}
+
+
+// Animation
+function animateFireworks(){
+
+    ctx.fillStyle = "rgba(0,0,0,0.15)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+
+    // Rockets
+    fireworks.forEach((f,index)=>{
+
+        if(!f.exploded){
+
+            f.y -= f.speed;
+
+            ctx.beginPath();
+
+            ctx.arc(
+                f.x,
+                f.y,
+                2,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fillStyle = f.color;
+
+            ctx.fill();
+
+            // Trail
+
+            ctx.beginPath();
+
+            ctx.moveTo(f.x,f.y);
+
+            ctx.lineTo(
+                f.x,
+                f.y + 20
+            );
+
+            ctx.strokeStyle =
+                f.color;
+
+            ctx.globalAlpha = 0.4;
+
+            ctx.stroke();
+
+            ctx.globalAlpha = 1;
+
+
+            // Explosion point
+
+            if(f.y <= f.targetY){
+
+                explode(f);
+
+                f.exploded = true;
+
+                fireworks.splice(index,1);
+
+            }
+
+        }
+
+    });
+
+
+    // Sparks
+
+    sparks.forEach((s,index)=>{
+
+        s.x += s.vx;
+        s.y += s.vy;
+
+        s.vy += s.gravity;
+
+        s.vx *= 0.99;
+
+        s.life -= s.decay;
+
+
+        if(s.life <= 0){
+
+            sparks.splice(index,1);
+
+            return;
+
+        }
+
+
+        ctx.beginPath();
+
+        ctx.arc(
+            s.x,
+            s.y,
+            s.size,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fillStyle = s.color;
+
+        ctx.globalAlpha = s.life;
+
+        ctx.fill();
+
+        ctx.globalAlpha = 1;
+
+    });
+
+
+    requestAnimationFrame(
+        animateFireworks
+    );
+
+}
+
+
+// Start Fireworks
+function startRealFireworks(){
+
+    if(fireworkRunning) return;
+
+    fireworkRunning = true;
+
+    animateFireworks();
+
+
+    // Random fireworks
+
+    setInterval(()=>{
+
+        createFirework();
+
+    },900);
+
+
+    // Golden rain
+
+    setInterval(()=>{
+
+        createRain();
+
+    },80);
+
+}
 
 // Photo Story
 startSlider();
