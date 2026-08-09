@@ -369,3 +369,29 @@ left:0;
     color: #66ff99;
     text-shadow: 0 0 10px rgba(102,255,153,.7);
     }
+/* নীল + সবুজ লেখা */
+
+#message .line:nth-of-type(odd){
+    color: #00bfff !important;
+}
+
+#message .line:nth-of-type(even){
+    color: #66ff99 !important;
+}
+
+/* বউজান আমার */
+#message h2{
+    color: #00bfff !important;
+}
+
+/* তোমার জামাই জান */
+#message .from{
+    color: #66ff99 !important;
+}
+
+/* নীল + সবুজ glow */
+#message .line{
+    text-shadow:
+        0 0 5px rgba(0,191,255,.8),
+        0 0 10px rgba(102,255,153,.5);
+}
