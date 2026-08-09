@@ -452,3 +452,42 @@ left:0;
 #message{
     z-index: 20 !important;
 }
+/* =========================
+   Cinematic Firework Flash
+========================= */
+
+#flashOverlay{
+    position: fixed;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(255,255,255,0.95),
+            rgba(120,210,255,0.75) 35%,
+            rgba(0,0,0,1) 75%
+        );
+
+    opacity: 1;
+    transition: opacity .18s ease;
+}
+
+#fireworks{
+    position: fixed;
+    inset: 0;
+    z-index: 5 !important;
+    pointer-events: none;
+}
+
+#hearts,
+#petals,
+#balloons{
+    z-index: 10 !important;
+    pointer-events: none;
+}
+
+#message{
+    z-index: 20 !important;
+}
