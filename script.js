@@ -1,5 +1,5 @@
 // ==========================
-// Birthday V5 - Complete Script
+// Birthday V5 - FINAL SCRIPT
 // ==========================
 
 
@@ -8,41 +8,57 @@
 // ==========================
 
 const loader = document.getElementById("loader");
-const flashOverlay = document.createElement("div");
-
-flashOverlay.id = "flashOverlay";
-
-flashOverlay.style.cssText = `
-    position:fixed;
-    inset:0;
-    z-index:4;
-    pointer-events:none;
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(255,255,255,.95),
-            rgba(120,210,255,.75) 35%,
-            rgba(0,0,0,1) 75%
-        );
-    opacity:1;
-    display:none;
-    transition:opacity .18s ease;
-`;
 const welcome = document.getElementById("welcome");
 const countSection = document.getElementById("countSection");
 const party = document.getElementById("party");
 
 const startBtn = document.getElementById("startBtn");
 const count = document.getElementById("count");
-
 const music = document.getElementById("music");
 
+const hearts = document.getElementById("hearts");
+const petals = document.getElementById("petals");
+const balloons = document.getElementById("balloons");
+
+const slides = document.querySelectorAll(".slide");
+
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+
 
 // ==========================
-// Loading Screen
+// Firework Variables
 // ==========================
 
-window.onload = () => {
+let fireworks = [];
+let sparks = [];
+
+let fireworkRunning = false;
+
+let currentSlide = 0;
+
+
+// ==========================
+// Canvas Size
+// ==========================
+
+function resizeCanvas() {
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+}
+
+resizeCanvas();
+
+window.addEventListener("resize", resizeCanvas);
+
+
+// ==========================
+// Loading
+// ==========================
+
+window.addEventListener("load", () => {
 
     setTimeout(() => {
 
@@ -52,11 +68,11 @@ window.onload = () => {
 
     }, 2000);
 
-};
+});
 
 
 // ==========================
-// Start Button
+// Surprise Button
 // ==========================
 
 startBtn.addEventListener("click", () => {
@@ -65,7 +81,7 @@ startBtn.addEventListener("click", () => {
     if (music) {
 
         music.play().catch(() => {
-            console.log("Music could not autoplay.");
+            console.log("Music blocked until user interaction.");
         });
 
     }
@@ -103,9 +119,7 @@ function startCount() {
 
         number++;
 
-
         count.style.transform = "scale(1.3)";
-
 
         setTimeout(() => {
 
@@ -128,10 +142,7 @@ function startCount() {
 
                 party.style.display = "flex";
 
-
-                // Start celebration
                 startCelebration();
-
 
             }, 800);
 
@@ -143,68 +154,19 @@ function startCount() {
 
 
 // ==========================
-// Celebration Elements
-// ==========================
-
-const hearts = document.getElementById("hearts");
-const petals = document.getElementById("petals");
-const balloons = document.getElementById("balloons");
-
-const slides = document.querySelectorAll(".slide");
-
-
-// ==========================
-// Fireworks Canvas
-// ==========================
-
-const canvas = document.getElementById("fireworks");
-const ctx = canvas.getContext("2d");
-
-
-function resizeCanvas() {
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-}
-
-
-resizeCanvas();
-
-
-window.addEventListener("resize", () => {
-
-    resizeCanvas();
-
-});
-
-
-// ==========================
-// Realistic Fireworks
-// ==========================
-
-let fireworks = [];
-let sparks = [];
-
-let fireworkRunning = false;
-
-
-// ==========================
-// Firework Colors
+// Firework Color
 // ==========================
 
 function randomColor() {
 
     const colors = [
-
-        "#ff3b3b",
+        "#ff3030",
         "#ffd700",
         "#00eaff",
         "#ff4fd8",
         "#7cff4f",
         "#ffffff",
         "#ff8c00"
-
     ];
 
     return colors[
@@ -215,7 +177,7 @@ function randomColor() {
 
 
 // ==========================
-// Create Firework Rocket
+// Create Rocket
 // ==========================
 
 function createFirework() {
@@ -225,10 +187,10 @@ function createFirework() {
 
 
     const targetY =
-        70 +
+        80 +
         Math.random() *
         canvas.height *
-        0.40;
+        0.38;
 
 
     fireworks.push({
@@ -244,11 +206,69 @@ function createFirework() {
             Math.random() * 4,
 
         color:
-            randomColor(),
-
-        exploded: false
+            randomColor()
 
     });
+
+}
+
+
+// ==========================
+// Create Flash Overlay
+// ==========================
+
+function createFlashOverlay() {
+
+    let overlay =
+        document.getElementById("fireworkFlash");
+
+
+    if (overlay) {
+        return overlay;
+    }
+
+
+    overlay =
+        document.createElement("div");
+
+
+    overlay.id =
+        "fireworkFlash";
+
+
+    overlay.style.position =
+        "fixed";
+
+    overlay.style.inset =
+        "0";
+
+    overlay.style.zIndex =
+        "4";
+
+    overlay.style.pointerEvents =
+        "none";
+
+    overlay.style.background =
+        "radial-gradient(circle at center, rgba(255,255,255,.95), rgba(120,210,255,.65) 35%, #000 80%)";
+
+    overlay.style.opacity =
+        "1";
+
+    overlay.style.display =
+        "none";
+
+    overlay.style.transition =
+        "opacity .18s ease";
+
+
+    // IMPORTANT:
+    // Overlay goes inside party,
+    // not above welcome page.
+
+    party.appendChild(overlay);
+
+
+    return overlay;
 
 }
 
@@ -257,137 +277,46 @@ function createFirework() {
 // Firework Explosion
 // ==========================
 
-function explode(f){
+function explode(f) {
 
-    // =========================
-    // Bright Photo Flash
-    // =========================
-
-    if(flashOverlay){
-
-        flashOverlay.style.transition =
-            "opacity .12s ease";
-
-        flashOverlay.style.opacity = "0";
+    const flash =
+        createFlashOverlay();
 
 
-        setTimeout(() => {
-
-            flashOverlay.style.transition =
-                "opacity .6s ease";
-
-            flashOverlay.style.opacity = "1";
-
-        }, 650);
-
-    }
+    // Photo becomes visible
+    flash.style.display =
+        "block";
 
 
-    // =========================
+    flash.style.opacity =
+        "0";
+
+
+    // Back to black after blast
+    setTimeout(() => {
+
+        flash.style.opacity =
+            "1";
+
+    }, 650);
+
+
+    // ======================
     // Main Explosion
-    // =========================
+    // ======================
 
     const particleCount = 110;
 
 
-    for(let i = 0; i < particleCount; i++){
+    for (let i = 0; i < particleCount; i++) {
 
         const angle =
             (Math.PI * 2 / particleCount) * i;
 
 
         const speed =
-            2 + Math.random() * 5;
-
-
-        sparks.push({
-
-            x: f.x,
-            y: f.y,
-
-            vx:
-                Math.cos(angle) * speed,
-
-            vy:
-                Math.sin(angle) * speed,
-
-            life: 1,
-
-            decay:
-                0.009 +
-                Math.random() * 0.015,
-
-            gravity: 0.045,
-
-            color: f.color,
-
-            size:
-                1 +
-                Math.random() * 2.5
-
-        });
-
-    }
-
-
-    // =========================
-    // Extra White Sparks
-    // =========================
-
-    for(let i = 0; i < 30; i++){
-
-        const angle =
-            Math.random() *
-            Math.PI * 2;
-
-
-        const speed =
-            1 + Math.random() * 4;
-
-
-        sparks.push({
-
-            x: f.x,
-            y: f.y,
-
-            vx:
-                Math.cos(angle) * speed,
-
-            vy:
-                Math.sin(angle) * speed,
-
-            life: 1,
-
-            decay: 0.018,
-
-            gravity: 0.03,
-
-            color: "#ffffff",
-
-            size: 1
-
-        });
-
-    }
-
-}
-
-
-    // =========================
-    // Explosion Particles
-    // =========================
-
-    const particleCount = 110;
-
-
-    for(let i = 0; i < particleCount; i++){
-
-        const angle =
-            (Math.PI * 2 / particleCount) * i;
-
-
-        const speed =
-            2 + Math.random() * 5;
+            2 +
+            Math.random() * 5;
 
 
         sparks.push({
@@ -421,15 +350,14 @@ function explode(f){
     }
 
 
-    // =========================
-    // Extra White Sparks
-    // =========================
+    // ======================
+    // White Sparks
+    // ======================
 
-    for(let i = 0; i < 30; i++){
+    for (let i = 0; i < 30; i++) {
 
         const angle =
-            Math.random() *
-            Math.PI * 2;
+            Math.random() * Math.PI * 2;
 
 
         const speed =
@@ -466,131 +394,8 @@ function explode(f){
 }
 
 
-    // Extra small white sparks
-
-    for (let i = 0; i < 25; i++) {
 // ==========================
-// Firework Explosion
-// ==========================
-
-function explode(f){
-
-    // =========================
-    // Bright Photo Flash
-    // =========================
-
-    if(flashOverlay){
-
-        flashOverlay.style.transition =
-            "opacity .12s ease";
-
-        flashOverlay.style.opacity = "0";
-
-
-        setTimeout(() => {
-
-            flashOverlay.style.transition =
-                "opacity .6s ease";
-
-            flashOverlay.style.opacity = "1";
-
-        }, 650);
-
-    }
-
-
-    // =========================
-    // Main Explosion
-    // =========================
-
-    const particleCount = 110;
-
-
-    for(let i = 0; i < particleCount; i++){
-
-        const angle =
-            (Math.PI * 2 / particleCount) * i;
-
-
-        const speed =
-            2 + Math.random() * 5;
-
-
-        sparks.push({
-
-            x: f.x,
-            y: f.y,
-
-            vx:
-                Math.cos(angle) * speed,
-
-            vy:
-                Math.sin(angle) * speed,
-
-            life: 1,
-
-            decay:
-                0.009 +
-                Math.random() * 0.015,
-
-            gravity: 0.045,
-
-            color: f.color,
-
-            size:
-                1 +
-                Math.random() * 2.5
-
-        });
-
-    }
-
-
-    // =========================
-    // Extra White Sparks
-    // =========================
-
-    for(let i = 0; i < 30; i++){
-
-        const angle =
-            Math.random() *
-            Math.PI * 2;
-
-
-        const speed =
-            1 + Math.random() * 4;
-
-
-        sparks.push({
-
-            x: f.x,
-            y: f.y,
-
-            vx:
-                Math.cos(angle) * speed,
-
-            vy:
-                Math.sin(angle) * speed,
-
-            life: 1,
-
-            decay: 0.018,
-
-            gravity: 0.03,
-
-            color: "#ffffff",
-
-            size: 1
-
-        });
-
-    }
-
-}
-
-
-// ==========================
-// Falling Golden Spark Shower
+// Golden Falling Sparks
 // ==========================
 
 function createRain() {
@@ -622,7 +427,7 @@ function createRain() {
             gravity: 0.018,
 
             color:
-                Math.random() > 0.35
+                Math.random() > 0.3
                     ? "#ffd700"
                     : "#ffffff",
 
@@ -638,16 +443,16 @@ function createRain() {
 
 
 // ==========================
-// Fireworks Animation
+// Firework Animation
 // ==========================
 
 function animateFireworks() {
 
-    // Slight fade instead of full clear
-    ctx.fillStyle =
-        "rgba(0,0,0,0.15)";
+    // IMPORTANT:
+    // Clear canvas completely.
+    // This keeps photos clear.
 
-    ctx.fillRect(
+    ctx.clearRect(
         0,
         0,
         canvas.width,
@@ -665,78 +470,79 @@ function animateFireworks() {
         i--
     ) {
 
-        const f = fireworks[i];
+        const f =
+            fireworks[i];
 
 
-        if (!f.exploded) {
-
-            f.y -= f.speed;
+        f.y -= f.speed;
 
 
-            // Rocket glow
+        // Rocket glow
 
-            ctx.beginPath();
+        ctx.beginPath();
 
-            ctx.arc(
-                f.x,
-                f.y,
-                2.5,
-                0,
-                Math.PI * 2
-            );
-
-
-            ctx.fillStyle =
-                f.color;
-
-            ctx.shadowBlur = 15;
-
-            ctx.shadowColor =
-                f.color;
-
-            ctx.fill();
-
-            ctx.shadowBlur = 0;
+        ctx.arc(
+            f.x,
+            f.y,
+            2.5,
+            0,
+            Math.PI * 2
+        );
 
 
-            // Rocket trail
+        ctx.fillStyle =
+            f.color;
 
-            ctx.beginPath();
+        ctx.shadowBlur =
+            15;
 
-            ctx.moveTo(
-                f.x,
-                f.y
-            );
+        ctx.shadowColor =
+            f.color;
 
-            ctx.lineTo(
-                f.x,
-                f.y + 25
-            );
+        ctx.fill();
 
 
-            ctx.strokeStyle =
-                f.color;
-
-            ctx.globalAlpha = 0.4;
-
-            ctx.lineWidth = 2;
-
-            ctx.stroke();
-
-            ctx.globalAlpha = 1;
+        ctx.shadowBlur =
+            0;
 
 
-            // Explosion
+        // Rocket trail
 
-            if (f.y <= f.targetY) {
+        ctx.beginPath();
 
-                explode(f);
+        ctx.moveTo(
+            f.x,
+            f.y
+        );
 
-                f.exploded = true;
+        ctx.lineTo(
+            f.x,
+            f.y + 25
+        );
 
-                fireworks.splice(i, 1);
 
-            }
+        ctx.strokeStyle =
+            f.color;
+
+        ctx.globalAlpha =
+            0.4;
+
+        ctx.lineWidth =
+            2;
+
+        ctx.stroke();
+
+        ctx.globalAlpha =
+            1;
+
+
+        // Explosion
+
+        if (f.y <= f.targetY) {
+
+            explode(f);
+
+            fireworks.splice(i, 1);
 
         }
 
@@ -753,7 +559,8 @@ function animateFireworks() {
         i--
     ) {
 
-        const s = sparks[i];
+        const s =
+            sparks[i];
 
 
         s.x += s.vx;
@@ -761,19 +568,16 @@ function animateFireworks() {
         s.y += s.vy;
 
 
-        // Gravity
-
-        s.vy += s.gravity;
-
-
-        // Air resistance
-
-        s.vx *= 0.99;
+        s.vy +=
+            s.gravity;
 
 
-        // Fade
+        s.vx *=
+            0.99;
 
-        s.life -= s.decay;
+
+        s.life -=
+            s.decay;
 
 
         if (s.life <= 0) {
@@ -785,7 +589,7 @@ function animateFireworks() {
         }
 
 
-        // Spark glow
+        // Spark
 
         ctx.beginPath();
 
@@ -804,7 +608,8 @@ function animateFireworks() {
         ctx.globalAlpha =
             s.life;
 
-        ctx.shadowBlur = 10;
+        ctx.shadowBlur =
+            10;
 
         ctx.shadowColor =
             s.color;
@@ -812,9 +617,11 @@ function animateFireworks() {
         ctx.fill();
 
 
-        ctx.shadowBlur = 0;
+        ctx.shadowBlur =
+            0;
 
-        ctx.globalAlpha = 1;
+        ctx.globalAlpha =
+            1;
 
     }
 
@@ -830,28 +637,48 @@ function animateFireworks() {
 // Start Fireworks
 // ==========================
 
-function startRealFireworks(){
+function startRealFireworks() {
 
-    if(fireworkRunning){
+    if (fireworkRunning) {
         return;
     }
 
-    fireworkRunning = true;
 
-    document.body.appendChild(flashOverlay);
+    fireworkRunning =
+        true;
 
-    flashOverlay.style.display = "block";
-    flashOverlay.style.opacity = "1";
+
+    // Start canvas
 
     animateFireworks();
 
-    setInterval(()=>{
-        createFirework();
-    },900);
 
-    setInterval(()=>{
+    // First rocket
+
+    setTimeout(() => {
+
+        createFirework();
+
+    }, 500);
+
+
+    // More rockets
+
+    setInterval(() => {
+
+        createFirework();
+
+    }, 1200);
+
+
+    // Golden rain
+
+    setInterval(() => {
+
         createRain();
-    },70);
+
+    }, 70);
+
 }
 
 
@@ -867,7 +694,8 @@ function startHearts() {
             document.createElement("div");
 
 
-        h.className = "heart";
+        h.className =
+            "heart";
 
 
         h.innerHTML = [
@@ -918,10 +746,12 @@ function startPetals() {
             document.createElement("div");
 
 
-        p.className = "petal";
+        p.className =
+            "petal";
 
 
-        p.innerHTML = "🌹";
+        p.innerHTML =
+            "🌹";
 
 
         p.style.left =
@@ -954,10 +784,12 @@ function startBalloons() {
             document.createElement("div");
 
 
-        b.className = "balloon";
+        b.className =
+            "balloon";
 
 
-        b.innerHTML = "🎈";
+        b.innerHTML =
+            "🎈";
 
 
         b.style.left =
@@ -985,12 +817,10 @@ function startBalloons() {
 
 
 // ==========================
-// Celebration Start
+// Celebration
 // ==========================
 
 function startCelebration() {
-
-    // Start effects
 
     startHearts();
 
@@ -998,13 +828,7 @@ function startCelebration() {
 
     startBalloons();
 
-
-    // Start realistic fireworks
-
     startRealFireworks();
-
-
-    // Start photo story
 
     startSlider();
 
@@ -1012,27 +836,26 @@ function startCelebration() {
 
 
 // ==========================
-// Photo Story
+// Photo Slider
 // ==========================
-
-let currentSlide = 0;
-
 
 function startSlider() {
 
     const lines =
         document.querySelectorAll(".line");
 
-
     const from =
         document.querySelector(".from");
+
+
+    currentSlide = 0;
 
 
     // First photo
 
     if (slides.length > 0) {
 
-        slides[currentSlide]
+        slides[0]
             .classList.add("active");
 
     }
@@ -1081,7 +904,7 @@ function startSlider() {
                     .classList.add("active");
 
 
-                // Show all messages
+                // Show all lines
 
                 lines.forEach(line => {
 
@@ -1090,7 +913,7 @@ function startSlider() {
                 });
 
 
-                // Show signature
+                // Signature
 
                 if (from) {
 
@@ -1114,7 +937,7 @@ function startSlider() {
                 .classList.add("active");
 
 
-            // Show matching message
+            // Matching line
 
             showLine(currentSlide);
 
@@ -1125,7 +948,7 @@ function startSlider() {
 
 
 // ==========================
-// Show Message
+// Show Line
 // ==========================
 
 function showLine(index) {
@@ -1145,4 +968,4 @@ function showLine(index) {
 
     }
 
-    }
+        }
