@@ -402,3 +402,53 @@ left:0;
 #message .from{
     font-family: "Noto Sans Bengali", sans-serif !important;
 }
+/* =========================
+   Layer Fix
+========================= */
+
+/* Photos - সবার নিচে */
+.slider{
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.slide{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* Fireworks - ছবির উপরে */
+#fireworks{
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+}
+
+
+/* Hearts / Roses / Balloons - ছবির উপরে */
+#hearts,
+#petals,
+#balloons{
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    pointer-events: none;
+}
+
+
+/* Text - সবার উপরে */
+#message{
+    z-index: 20 !important;
+}
