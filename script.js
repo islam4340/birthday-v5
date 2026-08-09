@@ -265,14 +265,12 @@ function explode(f){
 
     if(flashOverlay){
 
-        // প্রথমে কালো থেকে হঠাৎ উজ্জ্বল
         flashOverlay.style.transition =
             "opacity .12s ease";
 
         flashOverlay.style.opacity = "0";
 
 
-        // অল্প সময় পর আবার কালো
         setTimeout(() => {
 
             flashOverlay.style.transition =
@@ -283,6 +281,96 @@ function explode(f){
         }, 650);
 
     }
+
+
+    // =========================
+    // Main Explosion
+    // =========================
+
+    const particleCount = 110;
+
+
+    for(let i = 0; i < particleCount; i++){
+
+        const angle =
+            (Math.PI * 2 / particleCount) * i;
+
+
+        const speed =
+            2 + Math.random() * 5;
+
+
+        sparks.push({
+
+            x: f.x,
+            y: f.y,
+
+            vx:
+                Math.cos(angle) * speed,
+
+            vy:
+                Math.sin(angle) * speed,
+
+            life: 1,
+
+            decay:
+                0.009 +
+                Math.random() * 0.015,
+
+            gravity: 0.045,
+
+            color: f.color,
+
+            size:
+                1 +
+                Math.random() * 2.5
+
+        });
+
+    }
+
+
+    // =========================
+    // Extra White Sparks
+    // =========================
+
+    for(let i = 0; i < 30; i++){
+
+        const angle =
+            Math.random() *
+            Math.PI * 2;
+
+
+        const speed =
+            1 + Math.random() * 4;
+
+
+        sparks.push({
+
+            x: f.x,
+            y: f.y,
+
+            vx:
+                Math.cos(angle) * speed,
+
+            vy:
+                Math.sin(angle) * speed,
+
+            life: 1,
+
+            decay: 0.018,
+
+            gravity: 0.03,
+
+            color: "#ffffff",
+
+            size: 1
+
+        });
+
+    }
+
+}
 
 
     // =========================
@@ -381,6 +469,88 @@ function explode(f){
     // Extra small white sparks
 
     for (let i = 0; i < 25; i++) {
+// ==========================
+// Firework Explosion
+// ==========================
+
+function explode(f){
+
+    // =========================
+    // Bright Photo Flash
+    // =========================
+
+    if(flashOverlay){
+
+        flashOverlay.style.transition =
+            "opacity .12s ease";
+
+        flashOverlay.style.opacity = "0";
+
+
+        setTimeout(() => {
+
+            flashOverlay.style.transition =
+                "opacity .6s ease";
+
+            flashOverlay.style.opacity = "1";
+
+        }, 650);
+
+    }
+
+
+    // =========================
+    // Main Explosion
+    // =========================
+
+    const particleCount = 110;
+
+
+    for(let i = 0; i < particleCount; i++){
+
+        const angle =
+            (Math.PI * 2 / particleCount) * i;
+
+
+        const speed =
+            2 + Math.random() * 5;
+
+
+        sparks.push({
+
+            x: f.x,
+            y: f.y,
+
+            vx:
+                Math.cos(angle) * speed,
+
+            vy:
+                Math.sin(angle) * speed,
+
+            life: 1,
+
+            decay:
+                0.009 +
+                Math.random() * 0.015,
+
+            gravity: 0.045,
+
+            color: f.color,
+
+            size:
+                1 +
+                Math.random() * 2.5
+
+        });
+
+    }
+
+
+    // =========================
+    // Extra White Sparks
+    // =========================
+
+    for(let i = 0; i < 30; i++){
 
         const angle =
             Math.random() *
@@ -388,27 +558,23 @@ function explode(f){
 
 
         const speed =
-            1 +
-            Math.random() * 3;
+            1 + Math.random() * 4;
 
 
         sparks.push({
 
             x: f.x,
-
             y: f.y,
 
             vx:
-                Math.cos(angle) *
-                speed,
+                Math.cos(angle) * speed,
 
             vy:
-                Math.sin(angle) *
-                speed,
+                Math.sin(angle) * speed,
 
             life: 1,
 
-            decay: 0.02,
+            decay: 0.018,
 
             gravity: 0.03,
 
