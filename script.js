@@ -236,6 +236,7 @@ function startSlider(){
                 line.classList.add("show");
             });
 
+          document.querySelector(".from").classList.add("show");
             return;
         }
 
