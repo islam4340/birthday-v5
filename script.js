@@ -218,17 +218,20 @@ function startSlider(){
 
     const slider = setInterval(() => {
 
-        // আগের ছবি সরাবে
         slides[currentSlide].classList.remove("active");
 
         currentSlide++;
 
-        // ১১ নম্বর ছবিতে পৌঁছালে
+        // ১১ নম্বর ছবিতে পৌঁছালে এখানেই থামবে
         if(currentSlide >= slides.length){
 
             clearInterval(slider);
 
-            // সব লেখা দেখাবে
+            currentSlide = slides.length - 1;
+
+            slides[currentSlide].classList.add("active");
+
+            // সব ১১টি লেখা দেখাবে
             lines.forEach(line => {
                 line.classList.add("show");
             });
@@ -236,10 +239,10 @@ function startSlider(){
             return;
         }
 
-        // নতুন ছবি দেখাবে
+        // পরের ছবি
         slides[currentSlide].classList.add("active");
 
-        // নতুন ছবির লেখা দেখাবে
+        // সেই ছবির লেখা
         showLine(currentSlide);
 
     },4000);
@@ -250,16 +253,12 @@ function showLine(index){
 
     const lines = document.querySelectorAll(".line");
 
-    // আগের লেখাগুলো মুছে ফেলবে না
-    // শুধু বর্তমান ছবির লেখাটি দেখাবে
-
     if(lines[index]){
 
         setTimeout(() => {
-
             lines[index].classList.add("show");
-
         },500);
 
     }
+
 }
